@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from recipes.models import Favorite, IngredientAmount, Recipe, ShoppingCart
 from tags_ingr.models import Ingredient, Tag
 
@@ -30,6 +31,7 @@ class TagAdmin(admin.ModelAdmin):
 
 class IngredientAmountInline(admin.TabularInline):
     model = IngredientAmount
+    min_num = 1
 
 
 class RecipeAdmin(admin.ModelAdmin):
