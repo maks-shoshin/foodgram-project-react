@@ -2,7 +2,7 @@ from django.core.validators import MinValueValidator
 from django.db import models
 
 from recipes.validators import validate_time
-from tags_ingr.models import Ingredient, Tag
+from tags_ingredients.models import Ingredient, Tag
 from users.models import User
 
 
@@ -111,13 +111,13 @@ class ShoppingCart(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='sh_cart',
+        related_name='shopping_cart',
         verbose_name='Пользователь'
     )
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
-        related_name='sh_cart',
+        related_name='shopping_cart',
         verbose_name='Рецепт'
     )
 

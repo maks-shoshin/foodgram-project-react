@@ -4,8 +4,8 @@ from rest_framework import serializers
 
 from recipes.models import Favorite, IngredientAmount, Recipe, ShoppingCart
 from recipes.validators import validate_ingredients, validate_tags
-from tags_ingr.models import Ingredient, Tag
-from tags_ingr.serializers import TagSerializer
+from tags_ingredients.models import Ingredient, Tag
+from tags_ingredients.serializers import TagSerializer
 from users.serializers import CustomUserSerializer
 
 
@@ -61,13 +61,17 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     def create_ingredient_amount(self, valid_ingredients, recipe):
         """Создание уникальных записей: ингредиент - рецепт - количество."""
+        recipe_ingredients = []
         for ingredient_data in valid_ingredients:
-            ingredient = get_object_or_404(
-                Ingredient, id=ingredient_data.get('id'))
-            IngredientAmount.objects.bulk_create(
-                recipe=recipe,
-                ingredient=ingredient,
-                amount=ingredient_data.get('amount'))
+            recipe_ingredients.append(
+                IngredientAmount(
+                    recipe=recipe,
+                    ingredient=get_object_or_404(
+                        Ingredient, id=ingredient_data.get('id')),
+                    amount=ingredient_data['amount'],
+                )
+            )
+        IngredientAmount.objects.bulk_create(recipe_ingredients)
 
     def create_tags(self, data, recipe):
         """Отправка на валидацию и создание тэгов у рецепта."""

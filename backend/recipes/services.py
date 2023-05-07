@@ -9,3 +9,4 @@ def download():
     pdf.set_font('DejaVu', size=14)
     pdf.cell(txt='Список покупок', center=True)
     pdf.ln(8)
+    return pdf

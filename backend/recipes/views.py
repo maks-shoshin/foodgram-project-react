@@ -2,7 +2,6 @@ from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-# from fpdf import FPDF
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -53,9 +52,11 @@ class RecipeViewSet(viewsets.ModelViewSet):
         """Добавление и удаление рецептов - Избранное."""
         user = request.user
         if request.method == 'POST':
-            return self.add(Favorite, user, pk, 'избранное')
+            name = 'избранное'
+            return self.add(Favorite, user, pk, name)
         if request.method == 'DELETE':
-            return self.delete_relation(Favorite, user, pk, 'избранного')
+            name = 'избранного'
+            return self.delete_relation(Favorite, user, pk, name)
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
     @action(methods=['post', 'delete'], detail=True, url_path='shopping_cart',
@@ -64,9 +65,11 @@ class RecipeViewSet(viewsets.ModelViewSet):
         """Добавление и удаление рецептов - Список покупок."""
         user = request.user
         if request.method == 'POST':
-            return self.add(ShoppingCart, user, pk, 'список покупок')
+            name = 'список покупок'
+            return self.add(ShoppingCart, user, pk, name)
         if request.method == 'DELETE':
-            return self.delete_relation(ShoppingCart, user, pk, 'списка покупок')
+            name = 'списка покупок'
+            return self.delete_relation(ShoppingCart, user, pk, name)
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
     @action(methods=['get'], detail=False, url_path='download_shopping_cart',
@@ -75,17 +78,12 @@ class RecipeViewSet(viewsets.ModelViewSet):
         """Формирование и скачивание списка покупок."""
         user = request.user
         ingredients = IngredientAmount.objects.filter(
-            recipe__sh_cart__user=user).values(
+            recipe__shopping_cart__user=user).values(
                 'ingredient__name', 'ingredient__measurement_unit').annotate(
                     Sum('amount', distinct=True))
-        # pdf = FPDF()
-        # pdf.add_page()
-        # pdf.add_font(
-        #     'DejaVu', '', './recipes/fonts/DejaVuSansCondensed.ttf', uni=True)
-        # pdf.set_font('DejaVu', size=14)
-        # pdf.cell(txt='Список покупок', center=True)
-        # pdf.ln(8)
+
         pdf = download()
+
         for i, ingredient in enumerate(ingredients):
             name = ingredient['ingredient__name']
             unit = ingredient['ingredient__measurement_unit']

@@ -2,7 +2,8 @@ import json
 import os
 
 from django.core.management.base import BaseCommand, CommandError
-from tags_ingr.models import Ingredient
+
+from tags_ingredients.models import Ingredient
 
 DATA_DIR = 'data'
 

@@ -1,6 +1,6 @@
 from rest_framework.validators import ValidationError
 
-from tags_ingr.models import Ingredient, Tag
+from tags_ingredients.models import Ingredient, Tag
 
 
 def validate_time(value):

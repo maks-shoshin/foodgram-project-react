@@ -1,7 +1,8 @@
 from rest_framework import viewsets
-from tags_ingr.filters import CustomSearchFilter
-from tags_ingr.models import Ingredient, Tag
-from tags_ingr.serializers import IngredientSerializer, TagSerializer
+
+from tags_ingredients.filters import CustomSearchFilter
+from tags_ingredients.models import Ingredient, Tag
+from tags_ingredients.serializers import IngredientSerializer, TagSerializer
 
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
