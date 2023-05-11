@@ -31,7 +31,7 @@ class Command(BaseCommand):
                                                       measurement_unit=unit)
                             self.stdout.write(
                                 self.style.SUCCESS(
-                                            f'Successfully added {name}')
+                                    f'Successfully added {name}')
                             )
                         except Exception as e:
                             self.stdout.write(
