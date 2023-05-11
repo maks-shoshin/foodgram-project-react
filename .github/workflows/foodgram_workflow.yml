@@ -60,6 +60,7 @@ jobs:
         username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_KEY }}
         script: |
+          sudo docker pull makssh2023/foodgram_backend
           sudo docker-compose stop
           sudo docker-compose rm backend
           touch .env
