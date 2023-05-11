@@ -62,7 +62,8 @@ jobs:
         script: |
           sudo docker pull makssh2023/foodgram_backend
           sudo docker pull makssh2023/foodgram_frontend
-          sudo docker-compose up -d --build
+          sudo docker-compose rm backend
+          sudo docker-compose rm frontend
           touch .env
           echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
           echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
