@@ -60,9 +60,8 @@ jobs:
         username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_KEY }}
         script: |
-          cd foodgram/infra/
-          sudo docker-compose stop
-          echo y|sudo docker-compose rm backend
+          sudo docker compose stop
+          echo y|sudo docker compose rm backend
           sudo docker rmi makssh2023/foodgram_backend
           touch .env
           echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
@@ -72,10 +71,10 @@ jobs:
           echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
           echo DB_HOST=${{ secrets.DB_HOST }} >> .env
           echo DB_PORT=${{ secrets.DB_PORT }} >> .env
-          sudo docker-compose up -d
-          sudo docker-compose exec -T backend python manage.py makemigrations
-          sudo docker-compose exec -T backend python manage.py migrate
-          sudo docker-compose exec -T backend python manage.py collectstatic --no-input
+          sudo docker compose up -d
+          sudo docker compose exec -T backend python manage.py makemigrations
+          sudo docker compose exec -T backend python manage.py migrate
+          sudo docker compose exec -T backend python manage.py collectstatic --no-input
   send_message:
     name: Telegram - Send message
     runs-on: ubuntu-latest
