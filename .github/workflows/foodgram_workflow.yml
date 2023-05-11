@@ -61,7 +61,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         script: |
           sudo docker pull makssh2023/foodgram_backend
-          sudo docker pull makssh2023/foodgram_frontend
+          sudo docker pull makssh2023/foodgram_frontend:12.05
           sudo docker-compose rm backend
           sudo docker-compose rm frontend
           touch .env
