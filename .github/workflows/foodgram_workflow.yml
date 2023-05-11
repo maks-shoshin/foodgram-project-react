@@ -15,13 +15,10 @@ jobs:
         python-version: 3.7
     - name: Install dependencies
       run: |
-        # обновление pip
-        python -m pip install --upgrade pip 
-        # установка flake8 и его плагинов
-        pip install flake8 pep8-naming flake8-broken-line flake8-return flake8-isort
-        # установка зависимостей
-        cd api_yamdb/
-        pip install -r requirements.txt 
+        python -m pip install --upgrade pip
+        pip install flake8
+        cd backend/
+        pip install -r requirements.txt
     - name: Ckeck flake8 and Pytest
       run: |
         python -m flake8
