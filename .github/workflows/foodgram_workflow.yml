@@ -61,8 +61,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         script: |
           sudo docker-compose stop
-          echo y|sudo docker-compose rm backend
-          sudo docker rmi makssh2023/foodgram_backend
+          sudo docker-compose rm backend
           touch .env
           echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
           echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
