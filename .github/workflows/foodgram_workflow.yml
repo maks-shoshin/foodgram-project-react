@@ -60,10 +60,11 @@ jobs:
         username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_KEY }}
         script: |
-          sudo docker pull makssh2023/foodgram_backend
-          sudo docker pull makssh2023/foodgram_frontend:12.05
+          sudo docker-compose stop
           sudo docker-compose rm backend
           sudo docker-compose rm frontend
+          sudo docker pull makssh2023/foodgram_backend
+          sudo docker pull makssh2023/foodgram_frontend:12.05
           touch .env
           echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
           echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
@@ -72,7 +73,7 @@ jobs:
           echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
           echo DB_HOST=${{ secrets.DB_HOST }} >> .env
           echo DB_PORT=${{ secrets.DB_PORT }} >> .env
-          sudo docker-compose up -d
+          docker-compose up -d --build
           sudo docker-compose exec -T backend python manage.py makemigrations
           sudo docker-compose exec -T backend python manage.py migrate
           sudo docker-compose exec -T backend python manage.py collectstatic --no-input
